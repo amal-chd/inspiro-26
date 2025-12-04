@@ -32,10 +32,9 @@ const Footer = () => {
                     </ul>
                     <ul className="space-y-3">
                         <li className="font-bold text-white mb-2">Events</li>
-                        <li className="hover:text-red-500 transition cursor-pointer">CodeWar</li>
-                        <li className="hover:text-red-500 transition cursor-pointer">CyberHunt</li>
-                        <li className="hover:text-red-500 transition cursor-pointer">RoboRace</li>
-                        <li className="hover:text-red-500 transition cursor-pointer">Gaming</li>
+                        <li className="hover:text-red-500 transition cursor-pointer">Upside Down Vison</li>
+                        <li className="hover:text-red-500 transition cursor-pointer">The Hawkins Mystery Trails</li>
+                        <li className="hover:text-red-500 transition cursor-pointer">Prompting</li>
                     </ul>
                     <ul className="space-y-3">
                         <li className="font-bold text-white mb-2">Contact</li>
