@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Plus, ThumbsUp, ChevronDown } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import event1 from '../assets/event-1.png';
 import event2 from '../assets/event-2.png';
 import event3 from '../assets/event-3.png';
@@ -9,13 +9,15 @@ import event4 from '../assets/event-4.png';
 import event5 from '../assets/event-5.png';
 
 const Events = () => {
+    const navigate = useNavigate();
+    const [activeEventId, setActiveEventId] = useState(null);
     const events = [
         { title: "CodeWar", match: "98% Match", age: "16+", duration: "24h", image: event1 },
         { title: "CyberHunt", match: "95% Match", age: "18+", duration: "12h", image: event2 },
         { title: "RoboRace", match: "99% Match", age: "All", duration: "4h", image: event3 },
         { title: "PixelPerfect", match: "94% Match", age: "13+", duration: "6h", image: event4 },
         { title: "Valorant Cup", match: "97% Match", age: "16+", duration: "48h", image: event5 },
-        { title: "IdeaPitch", match: "89% Match", age: "18+", duration: "3h", image: event1 },
+        { title: "Valorant Cup", match: "97% Match", age: "16+", duration: "48h", image: event5 },
     ];
 
     return (
@@ -28,20 +30,40 @@ const Events = () => {
 
                 <div className="flex overflow-x-auto pb-8 gap-4 md:gap-6 scrollbar-hide snap-x snap-mandatory">
                     {events.map((event, index) => (
-                        <Link to="/episodes" key={index}>
+                        <div
+                            key={index}
+                            onClick={(e) => {
+                                // Check if mobile (touch device)
+                                const isMobile = window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+                                if (isMobile) {
+                                    if (activeEventId === index) {
+                                        // If already active, navigate
+                                        navigate('/episodes', { state: { eventId: event.id } });
+                                    } else {
+                                        // If not active, set active (show hover state)
+                                        setActiveEventId(index);
+                                    }
+                                } else {
+                                    // Desktop: navigate immediately
+                                    navigate('/episodes', { state: { eventId: event.id } });
+                                }
+                            }}
+                        >
                             <motion.div
                                 whileHover={{ scale: 1.05, zIndex: 50 }}
+                                animate={activeEventId === index ? { scale: 1.05, zIndex: 50 } : { scale: 1, zIndex: 0 }}
                                 transition={{ duration: 0.3 }}
-                                className="relative flex-shrink-0 w-[280px] md:w-auto bg-[#181818] rounded-md overflow-hidden cursor-pointer group hover:shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:ring-2 hover:ring-[#E50914] transition-all duration-300 snap-center border border-white/5"
+                                className={`relative flex-shrink-0 w-[280px] md:w-auto bg-[#181818] rounded-md overflow-hidden cursor-pointer group transition-all duration-300 snap-center border border-white/5 ${activeEventId === index ? 'shadow-[0_0_20px_rgba(229,9,20,0.6)] ring-2 ring-[#E50914]' : 'hover:shadow-[0_0_20px_rgba(229,9,20,0.6)] hover:ring-2 hover:ring-[#E50914]'}`}
                             >
                                 <div className="relative">
                                     <img
                                         src={event.image}
                                         alt={event.title}
-                                        className="w-full aspect-video object-cover rounded-t-md group-hover:sepia-[.5] group-hover:contrast-125 transition duration-500"
+                                        className={`w-full aspect-video object-cover rounded-t-md transition duration-500 ${activeEventId === index ? 'sepia-[.5] contrast-125' : 'group-hover:sepia-[.5] group-hover:contrast-125'}`}
                                     />
                                     {/* CRT Scanline Overlay on Hover */}
-                                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 crt-overlay transition-opacity duration-300" />
+                                    <div className={`absolute inset-0 crt-overlay transition-opacity duration-300 ${activeEventId === index ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`} />
 
                                     {/* New/Trending Badge */}
                                     {index < 3 && (
@@ -51,15 +73,15 @@ const Events = () => {
                                     )}
                                 </div>
 
-                                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4 flex flex-col justify-end">
+                                <div className={`absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent transition-opacity duration-300 p-4 flex flex-col justify-end ${activeEventId === index ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                                     <div className="flex items-center gap-2 mb-2">
-                                        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-200 transition scale-0 group-hover:scale-100 duration-300 delay-100">
+                                        <div className={`w-8 h-8 rounded-full bg-white flex items-center justify-center hover:bg-gray-200 transition duration-300 delay-100 ${activeEventId === index ? 'scale-100' : 'scale-0 group-hover:scale-100'}`}>
                                             <Play className="fill-black w-4 h-4" />
                                         </div>
-                                        <div className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition scale-0 group-hover:scale-100 duration-300 delay-150">
+                                        <div className={`w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition duration-300 delay-150 ${activeEventId === index ? 'scale-100' : 'scale-0 group-hover:scale-100'}`}>
                                             <Plus className="text-white w-4 h-4" />
                                         </div>
-                                        <div className="w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition ml-auto scale-0 group-hover:scale-100 duration-300 delay-200">
+                                        <div className={`w-8 h-8 rounded-full border-2 border-gray-400 flex items-center justify-center hover:border-white transition ml-auto duration-300 delay-200 ${activeEventId === index ? 'scale-100' : 'scale-0 group-hover:scale-100'}`}>
                                             <ChevronDown className="text-white w-4 h-4" />
                                         </div>
                                     </div>
@@ -78,7 +100,7 @@ const Events = () => {
                                     </div>
                                 </div>
                             </motion.div>
-                        </Link>
+                        </div>
                     ))}
                 </div>
             </div>
