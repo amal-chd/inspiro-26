@@ -1,22 +1,33 @@
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Play, Info } from 'lucide-react';
+import { Play, Info, Volume2, VolumeX } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroVideo from '../assets/hero-video.mp4';
 import logo from '../assets/logo.png';
 
 const Hero = () => {
+    const [isMuted, setIsMuted] = useState(true);
+    const videoRef = useRef(null);
+
+    const toggleMute = () => {
+        if (videoRef.current) {
+            videoRef.current.muted = !isMuted;
+            setIsMuted(!isMuted);
+        }
+    };
+
     return (
-        <section className="relative h-screen w-full overflow-hidden">
+        <section className="relative h-[100dvh] w-full overflow-hidden">
             {/* Video Background */}
             <div className="absolute inset-0 w-full h-full">
                 <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black z-10" />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#141414] via-transparent to-black/50 z-10" />
 
                 <video
+                    ref={videoRef}
                     autoPlay
-                    muted
+                    muted={isMuted}
                     loop
                     playsInline
                     className="w-full h-full object-cover opacity-60"
@@ -24,6 +35,16 @@ const Hero = () => {
                     <source src={heroVideo} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
+            </div>
+
+            {/* Mute Toggle Button */}
+            <div className="absolute top-24 right-4 z-30 md:top-32 md:right-12">
+                <button
+                    onClick={toggleMute}
+                    className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-white/30 bg-black/30 backdrop-blur-sm flex items-center justify-center text-white hover:bg-white/10 transition"
+                >
+                    {isMuted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+                </button>
             </div>
 
             <div className="relative z-20 h-full flex items-end justify-center md:justify-start px-4 sm:px-6 lg:px-12 pb-20 md:pb-32">
