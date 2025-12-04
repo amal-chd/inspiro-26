@@ -12,12 +12,11 @@ const Events = () => {
     const navigate = useNavigate();
     const [activeEventId, setActiveEventId] = useState(null);
     const events = [
-        { title: "CodeWar", match: "98% Match", age: "16+", duration: "24h", image: event1 },
-        { title: "CyberHunt", match: "95% Match", age: "18+", duration: "12h", image: event2 },
-        { title: "RoboRace", match: "99% Match", age: "All", duration: "4h", image: event3 },
-        { title: "PixelPerfect", match: "94% Match", age: "13+", duration: "6h", image: event4 },
-        { title: "Valorant Cup", match: "97% Match", age: "16+", duration: "48h", image: event5 },
-        { title: "Valorant Cup", match: "97% Match", age: "16+", duration: "48h", image: event5 },
+        { title: "Debugging", match: "98% Match", age: "16+", duration: "24h", image: event1 },
+        { title: "Gaming", match: "95% Match", age: "18+", duration: "12h", image: event2 },
+        { title: "Prompting", match: "99% Match", age: "All", duration: "4h", image: event3 },
+        { title: "Treasure Hunt", match: "94% Match", age: "13+", duration: "6h", image: event4 },
+        { title: "Web Designing", match: "97% Match", age: "16+", duration: "48h", image: event5 },
     ];
 
     return (
