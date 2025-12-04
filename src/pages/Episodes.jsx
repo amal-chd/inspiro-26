@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Download, Plus, ThumbsUp, Share2, ChevronLeft, ArrowDownToLine, Users, Trophy, AlertCircle, ChevronDown, ChevronUp, Check, ThumbsUp as ThumbsUpFilled } from 'lucide-react';
+import { Play, Download, Plus, ThumbsUp, Share2, ChevronLeft, ArrowDownToLine, Users, Trophy, AlertCircle, ChevronDown, ChevronUp, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import heroVideo from '../assets/hero-video.mp4';
 import event1 from '../assets/event-1.png';
@@ -15,6 +15,36 @@ const Episodes = () => {
     const [expandedEventId, setExpandedEventId] = useState(null);
     const [inList, setInList] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
+    const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+    useEffect(() => {
+        // Use specific date constructor to avoid parsing issues
+        const targetDate = new Date(2026, 0, 5, 0, 0, 0).getTime();
+
+        const calculateTimeLeft = () => {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                return {
+                    days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                    hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                    minutes: Math.floor((difference / 1000 / 60) % 60),
+                    seconds: Math.floor((difference / 1000) % 60)
+                };
+            }
+            return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        };
+
+        // Initial calculation
+        setTimeLeft(calculateTimeLeft());
+
+        const timer = setInterval(() => {
+            setTimeLeft(calculateTimeLeft());
+        }, 1000);
+
+        return () => clearInterval(timer);
+    }, []);
 
     const toggleEvent = (id) => {
         if (expandedEventId === id) {
@@ -188,12 +218,23 @@ const Episodes = () => {
                         <span className="font-bold">S1:E1 "Chapter One: The Algorithm"</span>
                     </div>
 
-                    {/* Progress Bar */}
-                    <div className="w-full h-1 bg-[#333] rounded-full mb-1">
-                        <div className="w-1/3 h-full bg-[#E50914] rounded-full" />
-                    </div>
-                    <div className="flex justify-between text-[10px] text-gray-400 mb-4">
-                        <span>34m remaining</span>
+                    {/* Countdown Timer */}
+                    {/* Netflix-style Timebar Countdown */}
+                    <div className="w-full group cursor-pointer mb-4">
+                        <div className="w-full h-1.5 bg-[#4d4d4d] rounded-sm relative mb-2">
+                            {/* Progress */}
+                            <div
+                                className="absolute top-0 left-0 h-full bg-[#E50914] rounded-l-sm"
+                                style={{ width: `${Math.max(0, Math.min(100, ((new Date() - new Date('2025-11-01')) / (new Date('2026-01-05') - new Date('2025-11-01'))) * 100))}%` }}
+                            >
+                                {/* Scrubber / Thumb (visible on hover or always if preferred) */}
+                                <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-3 h-3 bg-[#E50914] rounded-full shadow opacity-0 group-hover:opacity-100 transition-opacity" />
+                            </div>
+                        </div>
+                        <div className="relative flex items-center justify-center text-[10px] font-medium text-gray-400 mt-1">
+                            <span className="text-white">{timeLeft.days}d {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s remaining</span>
+                            <span className="absolute right-0">S1:E1</span>
+                        </div>
                     </div>
 
                     <p className="text-sm text-gray-300 mb-4 leading-relaxed">
