@@ -16,6 +16,7 @@ const Episodes = () => {
     const [inList, setInList] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     useEffect(() => {
         // Use specific date constructor to avoid parsing issues
@@ -85,69 +86,58 @@ const Episodes = () => {
     const events = [
         {
             id: 1,
-            title: "CodeWar: The Algorithm",
+            title: "Debugging: The Algorithm",
             description: "A 24-hour intense coding battle where participants solve complex algorithmic challenges to save the mainframe from a total shutdown.",
-            duration: "24h",
+            duration: "2h",
             image: event1,
             date: "Day 1",
-            rules: ["Team Size: 2-4 Members", "No external libraries allowed", "Plagiarism check enabled"],
-            prize: "₹15,000",
-            coordinators: "Mike Wheeler, Dustin Henderson"
+            rules: ["Team Size: 1 Member", "No external libraries allowed", "Plagiarism check enabled"],
+            prize: "₹7,000",
+            coordinators: "Alan Biju, Nihal V"
         },
         {
             id: 2,
-            title: "CyberHunt: The Breach",
+            title: "Gaming: The Breach",
             description: "Teams must uncover hidden flags within a compromised system. The clock is ticking, and every second counts in this CTF challenge.",
-            duration: "12h",
+            duration: "1h",
             image: event2,
             date: "Day 1",
             rules: ["Team Size: 3 Members", "Bring your own laptop", "Kali Linux recommended"],
-            prize: "₹10,000",
-            coordinators: "Lucas Sinclair, Max Mayfield"
+            prize: "₹7,000",
+            coordinators: "Ashwin, Juwal"
         },
         {
             id: 3,
-            title: "RoboRace: Circuit Breaker",
+            title: "Prompting: Circuit Breaker",
             description: "Autonomous bots race through a maze of obstacles. Will your creation survive the circuit breaker or crash and burn?",
-            duration: "4h",
+            duration: "1h",
             image: event3,
             date: "Day 2",
             rules: ["Team Size: 2-5 Members", "Bot dimensions: 30x30cm", "Wireless control only"],
-            prize: "₹12,000",
-            coordinators: "Will Byers, Eleven"
+            prize: "₹7,000",
+            coordinators: "Alan Kurian, Abdul Hadi"
         },
         {
             id: 4,
-            title: "PixelPerfect: Glitch Art",
+            title: "Treasure Hunt: Glitch Art",
             description: "Designers compete to create the most stunning UI/UX designs. The theme? Retro-futurism and digital decay.",
             duration: "6h",
             image: event4,
             date: "Day 2",
             rules: ["Individual Participation", "Software: Figma/Adobe XD", "Assets provided on spot"],
             prize: "₹8,000",
-            coordinators: "Nancy Wheeler, Jonathan Byers"
+            coordinators: "Nivedya , Riya"
         },
         {
             id: 5,
-            title: "Valorant Cup: Protocol",
+            title: "Web Designing: Protocol",
             description: "The ultimate tactical shooter tournament. 5v5. One life per round. Defuse the spike or eliminate the enemy team.",
             duration: "48h",
             image: event5,
             date: "Day 1-2",
             rules: ["Team Size: 5 Members", "Map pool: All active maps", "Single Elimination"],
             prize: "₹20,000",
-            coordinators: "Steve Harrington, Robin Buckley"
-        },
-        {
-            id: 6,
-            title: "IdeaPitch: The Upside",
-            description: "Pitch your revolutionary startup idea to a panel of investors. Can you turn the world upside down with your innovation?",
-            duration: "3h",
-            image: event1,
-            date: "Day 2",
-            rules: ["Team Size: 1-3 Members", "Presentation time: 5 mins", "Q&A: 3 mins"],
-            prize: "₹25,000",
-            coordinators: "Jim Hopper, Joyce Byers"
+            coordinators: "Amalchand , Nandhu"
         },
     ];
 
@@ -173,11 +163,93 @@ const Episodes = () => {
                     </Link>
                     <div className="flex items-center gap-4">
                         <Share2 size={24} className="text-white cursor-pointer" onClick={handleShare} />
-                        <div className="w-6 h-6 rounded-full bg-gray-500 overflow-hidden">
+                        <div className="w-6 h-6 rounded-full bg-gray-500 overflow-hidden cursor-pointer border border-white/50 hover:border-red-600 transition" onClick={() => setIsProfileOpen(true)}>
                             <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Profile" className="w-full h-full object-cover" />
                         </div>
                     </div>
                 </div>
+
+                {/* Hawkins Lab ID Card Modal */}
+                <AnimatePresence>
+                    {isProfileOpen && (
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+                            onClick={() => setIsProfileOpen(false)}
+                        >
+                            <motion.div
+                                initial={{ scale: 0.8, rotateY: 90, opacity: 0 }}
+                                animate={{ scale: 1, rotateY: 0, opacity: 1 }}
+                                exit={{ scale: 0.8, rotateY: -90, opacity: 0 }}
+                                transition={{ type: "spring", damping: 12 }}
+                                className="bg-[#f0f0f0] w-full max-w-sm rounded-lg shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden relative font-mono text-black transform rotate-1"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                {/* ID Card Header */}
+                                <div className="bg-[#1a1a1a] text-white p-4 flex items-center justify-between border-b-4 border-red-600">
+                                    <div className="flex flex-col">
+                                        <span className="text-[10px] tracking-widest opacity-70">DEPARTMENT OF ENERGY</span>
+                                        <span className="font-bold text-lg leading-none">HAWKINS LAB</span>
+                                    </div>
+                                    <div className="w-8 h-8 rounded-full border-2 border-white/20 flex items-center justify-center">
+                                        <div className="w-4 h-4 bg-red-600 rounded-full animate-pulse" />
+                                    </div>
+                                </div>
+
+                                {/* ID Card Body */}
+                                <div className="p-6 relative">
+                                    {/* Watermark */}
+                                    <div className="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                                        <img src={logo} alt="Watermark" className="w-48 grayscale" />
+                                    </div>
+
+                                    <div className="flex gap-4 mb-6">
+                                        <div className="w-24 h-32 bg-gray-300 border-2 border-black/20 shadow-inner flex-shrink-0">
+                                            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png" alt="Subject" className="w-full h-full object-cover grayscale contrast-125" />
+                                        </div>
+                                        <div className="flex flex-col justify-between py-1">
+                                            <div>
+                                                <span className="block text-[10px] text-gray-500 uppercase">Subject Name</span>
+                                                <span className="font-bold text-xl font-serif">GUEST_USER</span>
+                                            </div>
+                                            <div>
+                                                <span className="block text-[10px] text-gray-500 uppercase">ID Number</span>
+                                                <span className="font-bold text-red-700 text-lg">011-345-89</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="space-y-3 text-sm border-t border-black/10 pt-4">
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">CLEARANCE:</span>
+                                            <span className="font-bold">LEVEL 4 (RESTRICTED)</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">STATUS:</span>
+                                            <span className="font-bold text-green-700">ACTIVE / MONITORING</span>
+                                        </div>
+                                        <div className="flex justify-between">
+                                            <span className="text-gray-500">ASSIGNMENT:</span>
+                                            <span className="font-bold">INSPIRO_26_OBSERVER</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Stamp */}
+                                    <div className="absolute bottom-4 right-4 border-4 border-red-600/30 text-red-600/30 font-black text-2xl px-2 py-1 -rotate-12 pointer-events-none">
+                                        CLASSIFIED
+                                    </div>
+                                </div>
+
+                                {/* ID Card Footer */}
+                                <div className="bg-[#e0e0e0] p-2 text-[8px] text-center text-gray-500 border-t border-gray-300">
+                                    PROPERTY OF HAWKINS NATIONAL LABORATORY. IF FOUND, RETURN IMMEDIATELY.
+                                </div>
+                            </motion.div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Play Overlay */}
                 <div className="absolute inset-0 flex items-center justify-center bg-black/20">
