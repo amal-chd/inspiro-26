@@ -47,7 +47,7 @@ const Hero = () => {
                 </button>
             </div>
 
-            <div className="relative z-20 h-full flex items-end justify-center md:justify-start px-4 sm:px-6 lg:px-12 pb-20 md:pb-32">
+            <div className="relative z-20 h-full flex items-end justify-center md:justify-start px-4 sm:px-6 lg:px-12 pb-8 md:pb-12">
                 <div className="max-w-2xl w-full flex flex-col items-center md:items-start text-center md:text-left">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
