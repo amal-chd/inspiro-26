@@ -39,11 +39,14 @@ const About = () => {
                     <div className="w-full md:w-1/2 relative group">
                         <div className="absolute inset-0 bg-gradient-to-tr from-[#E50914]/20 to-transparent rounded-lg z-10 pointer-events-none" />
                         <motion.img
+                            initial={{ opacity: 0, scale: 0.9, filter: 'grayscale(100%)' }}
+                            whileInView={{ opacity: 1, scale: 1, filter: 'grayscale(0%)' }}
+                            viewport={{ once: true, margin: "-100px" }}
+                            transition={{ duration: 0.8 }}
                             whileHover={{ scale: 1.02, rotate: 1 }}
-                            transition={{ duration: 0.5 }}
                             src={aboutContent}
                             alt="The Other Side"
-                            className="w-full rounded-lg shadow-2xl shadow-red-900/20 grayscale group-hover:grayscale-0 transition duration-700 border border-white/10"
+                            className="w-full rounded-lg shadow-2xl shadow-red-900/20 transition duration-700 border border-white/10"
                         />
                     </div>
                 </div>
