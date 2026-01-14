@@ -52,8 +52,8 @@ const Hero = () => {
                 </button>
             </div>
 
-            <div className="relative z-20 h-full flex items-end justify-center md:justify-start px-4 sm:px-6 lg:px-12 pb-8 md:pb-12">
-                <div className="max-w-2xl w-full flex flex-col items-center md:items-start text-center md:text-left">
+            <div className="relative z-20 h-full flex items-end justify-center px-4 sm:px-6 lg:px-12 pb-8 md:pb-12">
+                <div className="max-w-4xl w-full flex flex-col items-center text-center">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -63,8 +63,8 @@ const Hero = () => {
                         {/* Stranger Things Style Title */}
                         <h1 className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-cinematic font-black text-transparent bg-clip-text bg-gradient-to-b from-primary to-black stroke-red-600 tracking-tighter drop-shadow-[0_0_15px_rgba(229,9,20,0.8)] leading-[0.9]"
                             style={{ WebkitTextStroke: '1px #E50914' }}>
-                            INSPIRO<br />
-                            <span className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl">26</span>
+                            INSPIRO<br className="md:hidden" />
+                            <span className="text-4xl sm:text-5xl md:text-8xl lg:text-9xl md:ml-4">26</span>
                         </h1>
                     </motion.div>
 
@@ -72,9 +72,9 @@ const Hero = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.5, duration: 0.8 }}
-                        className="w-full flex flex-col items-center md:items-start"
+                        className="w-full flex flex-col items-center"
                     >
-                        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 md:gap-4 mb-4 md:mb-6 text-white font-medium text-xs md:text-base">
+                        <div className="flex flex-wrap items-center justify-center gap-2 md:gap-4 mb-4 md:mb-6 text-white font-medium text-xs md:text-base">
                             <span className="text-green-400 font-bold">98% Match</span>
                             <span className="text-gray-400">2026</span>
                             <span className="border border-gray-500 px-1 text-[10px] md:text-xs">U/A 16+</span>
@@ -86,7 +86,7 @@ const Hero = () => {
                             When a young developer vanishes into the code, a small town uncovers a mystery involving secret experiments, terrifying bugs, and one strange IT Fest.
                         </p>
 
-                        <div className="flex items-center justify-center md:justify-start gap-3 md:gap-4">
+                        <div className="flex items-center justify-center gap-3 md:gap-4">
                             <Link to="/episodes" className="flex items-center gap-2 px-4 py-2 md:px-8 md:py-3 bg-white text-black rounded hover:bg-white/90 transition font-bold text-sm md:text-lg">
                                 <Play className="fill-black w-4 h-4 md:w-6 md:h-6" /> Play
                             </Link>
